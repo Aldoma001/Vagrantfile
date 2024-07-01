@@ -1,0 +1,19 @@
+VAGRANTFILE_API_VERSION = "2"
+
+# Specify the box for the virtual machines
+VAGRANT_CASK_PROVIDER_VIRTUALBOX="virtualbox"
+VB_VERSION="6.1"  # Adjust if needed
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "ubuntu/focal64"
+
+  # Configure Master node
+  config.vm.define "master" do |master|
+    master.vm.hostname = "master"
+  end
+
+  # Configure Slave node
+  config.vm.define "slave" do |slave|
+    slave.vm.hostname = "slave"
+  end
+end
