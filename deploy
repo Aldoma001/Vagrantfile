@@ -1,0 +1,15 @@
+---
+- name: Deploy LAMP stack on Slave node
+  hosts: slave
+  become: true
+  roles:
+    - lamp
+
+- name: Configure cron job on Slave node
+  hosts: slave
+  become: true
+  tasks:
+    - name: Add cron job to check uptime
+      cron:
+        name: Check server uptime
+        job: "0 0 * * * /bin/bash -c 'uptime >> /var/log/uptime.log'"
