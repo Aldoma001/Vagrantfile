@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Define variables (modify as needed)
+PHP_VERSION="7.4"
+MYSQL_ROOT_PASSWORD="your_strong_password"
+GITHUB_REPO="https://github.com/your_username/your_php_app.git"
+APP_DIR="/var/www/html"
+
+# Update package lists
+apt update
+
+# Install Apache, MySQL, and PHP
+apt install -y apache2 mysql-server php${PHP_VERSION} php${PHP_VERSION}-mysql php${PHP_VERSION}-mbstring php${PHP_VERSION}-xml
+
+# Secure MySQL
+mysql_secure_installation << EOF
+y
+${MYSQL_ROOT_PASSWORD}
+y
+y
+y
+y
+EOF
+
+# Clone PHP application
+git clone ${GITHUB_REPO} ${APP_DIR}
+
+# Enable and restart Apache
+systemctl enable apache2
+systemctl restart apache2
+
+echo "LAMP stack deployed successfully!"
